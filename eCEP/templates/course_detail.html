@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ course.title }}</title>
+</head>
+<body>
+    <h1>{{ course.title }}</h1>
+    <p><strong>Description:</strong> {{ course.description }}</p>
+    <p><strong>Niveau:</strong> {{ course.level }}</p>
+    <p><strong>Enseignant:</strong> {{ course.teacher.user.username }}</p>
+    
+    {% if course.video_file.all %}
+        <h2>Vidéos:</h2>
+        {% for video in course.video_file.all %}
+            <video width="320" height="240" controls>
+                <source src="{{ video.file.url }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        {% endfor %}
+    {% else %}
+        <p>Aucune vidéo disponible pour ce cours.</p>
+    {% endif %}
+    
+    {% if course.pdf_file.all %}
+        <h2>PDFs:</h2>
+        <ul>
+            {% for pdf in course.pdf_file.all %}
+                <li><a href="{{ pdf.file.url }}" target="_blank">Télécharger le PDF {{ forloop.counter }}</a></li>
+            {% endfor %}
+            <!-- {% with course.pdf_file.first as first_pdf %}
+                <li><a href="{{ first_pdf.file.url }}" target="_blank">Télécharger le premier PDF</a></li>
+            {% endwith %} -->
+        </ul>
+    {% else %}
+        <p>Aucun PDF associé à ce cours.</p>
+    {% endif %}
+    
+    {% if course.audio_file.all %}
+        <h2>Audios:</h2>
+        {% for audio in course.audio_files.all %}
+            <audio controls>
+                <source src="{{ audio.file.url }}" type="audio/mpeg">
+                Your browser does not support the audio tag.
+            </audio>
+        {% endfor %}
+    {% else %}
+        <p>Aucun fichier audio disponible.</p>
+    {% endif %}
+</body>
+</html>

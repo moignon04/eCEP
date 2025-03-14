@@ -1,0 +1,132 @@
+/* Styles pour les reçus de paiement */
+.receipt-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.receipt-header {
+    text-align: center;
+    padding: 20px 0;
+    border-bottom: 2px solid #333;
+}
+
+.receipt-header img {
+    max-width: 200px;
+    height: auto;
+}
+
+.receipt-title {
+    font-size: 24px;
+    color: #333;
+    margin: 10px 0;
+}
+
+.company-details,
+.client-details {
+    margin: 20px 0;
+}
+
+.payment-info {
+    margin: 30px 0;
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.payment-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.payment-row:last-child {
+    border-bottom: none;
+}
+
+.payment-label {
+    font-weight: bold;
+    color: #666;
+}
+
+.payment-value {
+    text-align: right;
+}
+
+.total-amount {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #333;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 2px solid #333;
+}
+
+.receipt-footer {
+    margin-top: 40px;
+    text-align: center;
+    font-size: 0.9em;
+    color: #666;
+}
+
+.verification-code {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.verification-code img {
+    max-width: 150px;
+    height: auto;
+}
+
+/* Statuts de paiement */
+.status-completed {
+    color: #28a745;
+}
+
+.status-pending {
+    color: #ffc107;
+}
+
+.status-failed {
+    color: #dc3545;
+}
+
+/* Styles d'impression */
+@media print {
+    body {
+        background: #fff;
+    }
+    
+    .receipt-container {
+        box-shadow: none;
+        padding: 0;
+    }
+    
+    .no-print {
+        display: none;
+    }
+    
+    .page-break {
+        page-break-after: always;
+    }
+}
+
+/* Responsive */
+@media screen and (max-width: 600px) {
+    .receipt-container {
+        padding: 10px;
+    }
+    
+    .payment-row {
+        flex-direction: column;
+    }
+    
+    .payment-value {
+        text-align: left;
+        margin-top: 5px;
+    }
+}

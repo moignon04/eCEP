@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- templates/course_list.html -->
+    <h1>Liste des Cours</h1>
+    <a href="{% url 'course_create' %}">Ajouter un cours</a>
+    <ul>
+        {% for course in courses %}
+            <li>
+                <a href="{% url 'course_detail' course.id %}">{{ course.title }}</a> - 
+                <a href="{% url 'course_edit' course.id %}">Modifier</a>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

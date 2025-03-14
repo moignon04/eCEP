@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reçu de Paiement - {{ payment.transaction_id }}</title>
+    <link rel="stylesheet" href="{% static 'css/receipts.css' %}">
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 20px;
+        }
+        .company-info {
+            float: left;
+            width: 50%;
+        }
+        .receipt-info {
+            float: right;
+            width: 50%;
+            text-align: right;
+        }
+        .clear {
+            clear: both;
+        }
+        .payment-details {
+            margin: 30px 0;
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 5px;
+        }
+        .payment-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+            padding: 5px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .total {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #333;
+        }
+        .footer {
+            margin-top: 50px;
+            text-align: center;
+            font-size: 0.9em;
+            color: #666;
+        }
+        .status-completed {
+            color: #28a745;
+            font-weight: bold;
+        }
+        .status-pending {
+            color: #ffc107;
+            font-weight: bold;
+        }
+        .status-failed {
+            color: #dc3545;
+            font-weight: bold;
+        }
+        .qr-code {
+            text-align: center;
+            margin: 20px 0;
+        }
+        @media print {
+            body {
+                padding: 0;
+                margin: 0;
+            }
+            .no-print {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="{% static 'images/logo.svg' %}" alt="eCEP Logo">
+        <h1>{{ company_name }}</h1>
+        <div class="company-info">
+            <p>{{ company_address }}</p>
+            <p>Tél: {{ company_phone }}</p>
+            <p>Email: {{ company_email }}</p>
+        </div>
+        <div class="receipt-info">
+            <h2>Reçu de Paiement</h2>
+            <p>N° {{ payment.transaction_id }}</p>
+            <p>Date: {{ payment.payment_date|date:"d/m/Y H:i" }}</p>
+        </div>
+        <div class="clear"></div>
+    </div>
+
+    <div class="client-info">
+        <h3>Informations Client</h3>
+        <p>Nom: {{ user.get_full_name }}</p>
+        <p>Email: {{ user.email }}</p>
+        {% if payment.mobile_payment %}
+        <p>Téléphone: {{ payment.mobile_payment.phone_number }}</p>
+        {% endif %}
+    </div>
+
+    <div class="payment-details">
+        <h3>Détails du Paiement</h3>
+        <div class="payment-row">
+            <span>Type de Licence</span>
+            <span>{{ license.get_type_display }}</span>
+        </div>
+        <div class="payment-row">
+            <span>Période</span>
+            <span>{{ license.start_date|date:"d/m/Y" }} - {{ license.end_date|date:"d/m/Y" }}</span>
+        </div>
+        <div class="payment-row">
+            <span>Mode de Paiement</span>
+            <span>{{ payment.get_payment_type_display }}</span>
+        </div>
+        {% if payment.mobile_payment %}
+        <div class="payment-row">
+            <span>Opérateur</span>
+            <span>{{ payment.mobile_payment.get_provider_display }}</span>
+        </div>
+        {% endif %}
+        <div class="payment-row">
+            <span>Statut</span>
+            <span class="status-{{ payment.status }}">{{ payment.get_status_display }}</span>
+        </div>
+        <div class="payment-row total">
+            <span>Montant Total</span>
+            <span>{{ payment.amount }} {{ payment.currency }}</span>
+        </div>
+    </div>
+
+    <div class="qr-code">
+        <!-- Placeholder pour le QR code -->
+        <img src="data:image/png;base64,{{ qr_code }}" alt="QR Code">
+    </div>
+
+    <div class="footer">
+        <p>Ce reçu a été généré automatiquement le {{ generated_at|date:"d/m/Y" }} à {{ generated_at|time:"H:i" }}</p>
+        <p>Pour toute question, contactez-nous à {{ company_email }}</p>
+    </div>
+
+    <div class="no-print">
+        <button onclick="window.print()">Imprimer le reçu</button>
+    </div>
+
+    <div class="qr-code">
+        <img src="data:image/png;base64,{{ qr_code }}" alt="QR Code">
+    </div>
+</body>
+</html>

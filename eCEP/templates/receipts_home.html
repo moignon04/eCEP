@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Accueil</title>
+</head>
+<body>
+    <header>
+        <h1>Bienvenue dans mon application Django</h1>
+        <nav>
+            <ul>
+                <li><a href="{% url 'home' %}">Accueil</a></li>
+                <li><a href="{% url 'paymentMobile' %}">Paiements Mobiles</a></li>
+                <li><a href="{% url 'payment' %}">Mobiles</a></li>
+                <li><a href="{% url 'logout' %}">Déconnexion</a></li> 
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h2>Section principale</h2>
+        <p>Ceci est la page d'accueil de votre application.</p>
+    </main>
+    <footer>
+        <p>&copy; 2025 Mon Application</p>
+    </footer>
+    <script src="{% static 'js/scripts.js' %}"></script>
+</body>
+</html>

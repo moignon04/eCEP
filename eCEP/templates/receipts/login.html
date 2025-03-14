@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Connexion</title>
+</head>
+<body>
+    <h1>Connexion</h1>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}  <!-- Affiche le formulaire de connexion -->
+        <button type="submit">Se connecter</button>
+    </form>
+    <a href="{% url 'home' %}">Retour à l'accueil</a>
+</body>
+</html>
